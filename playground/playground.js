@@ -29,4 +29,26 @@ $(function () {
 
         $('#div1 a').attr('target', '_blank');
     });
+    $('button.extend').on('click', function (evt) {
+        evt.preventDefault();
+
+        var a = {
+            b: 'c',
+            d: {
+                e: 'f',
+                g: 'h'
+            }
+        }
+
+        var b = {
+            a: 'b',
+            d: {
+                g: 'i',
+                j: 'k'
+            }
+        }
+        
+        $().extend(a, b);
+        console.log('a', a);
+    });
 });

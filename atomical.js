@@ -114,7 +114,27 @@ var $ = function (selector, context) {
             return workObj;
         },
         extend: function (target, source) {
-            Object.assign(target, source);
+            if (typeof target !== 'object' || typeof source !== 'object') return false;
+            for (var prop in source) {
+                if (!source.hasOwnProperty(prop)) continue;
+                if (prop in target) {
+                    if (typeof target[prop] !== 'object') {
+                        target[prop] = source[prop];
+                    } else {
+                        if (typeof source[prop] !== 'object') {
+                            target[prop] = source[prop];
+                        } else {
+                            if (target[prop].concat && source[prop].concat) { 
+                                target[prop] = target[prop].concat(source[prop]);
+                            } else {
+                                target[prop] = workObj.extend(target[prop], source[prop]);
+                            }
+                        }
+                    }
+                } else {
+                    target[prop] = source[prop];
+                }
+            }
             return target;
         }
     };
@@ -127,17 +147,17 @@ var $ = function (selector, context) {
                 document.addEventListener('DOMContentLoaded', selector);
             return workObj.element;
         }
-    
+
         if (typeof selector === 'string' && selector.indexOf('<') === 0) {
             var outer = document.createElement('div');
             outer.innerHTML = selector;
             return outer.children.length === 1 ? outer.children[0] : outer.children;
         }
-    
+
         if (typeof selector === 'object') {
             return selector;
         }
-    
+
         if (selector) {
             var result = (context || document).querySelectorAll(selector);
             return result || result.length === 1 ? result[0] : result;
