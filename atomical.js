@@ -112,6 +112,10 @@ var $ = function (selector, context) {
             outer.innerHTML = domStructure;
             workObj.element.appendChild(outer.children[0]);
             return workObj;
+        },
+        extend: function (target, source) {
+            Object.assign(target, source);
+            return target;
         }
     };
 
