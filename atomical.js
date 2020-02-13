@@ -1,5 +1,5 @@
 /*!
-  * AtomicalJS v1.1 - Vanilla Javascript Ultra Light jQuery alternative.
+  * AtomicalJS v1.1 - Vanilla Javascript Ultra Lightweight jQuery alternative.
   * Copyright 2019 Silvio Delgado (https://github.com/silviodelgado)
   * Licensed under MIT (https://opensource.org/licenses/MIT)
   * https://github.com/silviodelgado/AtomicalJS
