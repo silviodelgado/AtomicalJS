@@ -1,20 +1,23 @@
 /*!
-  * AtomicalJS v1.1 - Vanilla Javascript Ultra Light jQuery alternative.
-  * Copyright 2019 Silvio Delgado (https://github.com/silviodelgado)
+  * AtomicalJS v1.2 - Vanilla Javascript Ultra Light jQuery alternative.
+  * Copyright 2019-2020 Silvio Delgado (https://github.com/silviodelgado)
   * Licensed under MIT (https://opensource.org/licenses/MIT)
   * https://github.com/silviodelgado/AtomicalJS
   */
-var $ = function (selector, context) {
+(function (root, factory) {
+    if (typeof define === 'function' && define.amd) {
+        define([], factory(root));
+    } else if (typeof exports === 'object') {
+        module.exports = factory(root);
+    } else {
+        root.$ = factory(root);
+    }
+})(typeof global !== "undefined" ? global : this.window || this.global, function (root) {
+    'use strict';
 
     var internal = {
         $element: null,
         $request: null,
-        on: function (eventName, callback) {
-            if (typeof callback === 'function') {
-                internal.$element.addEventListener(eventName, callback);
-            }
-            return internal;
-        },
         ready: function (callback) {
             if (typeof callback === 'function') {
                 if (document.readyState != 'loading') {
@@ -22,6 +25,12 @@ var $ = function (selector, context) {
                 } else {
                     internal.$element.addEventListener('DOMContentLoaded', callback);
                 }
+            }
+            return internal;
+        },
+        on: function (eventName, callback) {
+            if (typeof callback === 'function') {
+                internal.$element.addEventListener(eventName, callback);
             }
             return internal;
         },
@@ -44,23 +53,15 @@ var $ = function (selector, context) {
             return internal.$element.className.indexOf(className) >= 0;
         },
         addClass: function (className) {
-            //internal.$element.className += ' ' + className;
             internal.$element.classList.add(className);
             return internal;
         },
         removeClass: function (className) {
             internal.$element.classList.remove(className);
-            //internal.$element.className = internal.$element.className
-            //    .replace(className, '').replace('  ', ' ').trim();
             return internal;
         },
         toggleClass: function (className) {
             internal.$element.classList.toggle(className);
-            //if (internal.hasClass(className)) {
-            //    internal.removeClass(className);
-            //} else {
-            //    internal.addClass(className);
-            //}
             return internal;
         },
         css: function (property, style) {
@@ -158,7 +159,7 @@ var $ = function (selector, context) {
         },
         appendTo: function (appendSelector, appendContext) {
             var appendObj = getSelector(appendSelector, appendContext);
-            appendObj.$element.appendChild(internal.$element);
+            appendObj.appendChild(internal.$element);
             return internal;
         },
         append: function (domStructure) {
@@ -204,6 +205,13 @@ var $ = function (selector, context) {
                 return internal;
             }
             return internal.$element.textContent;
+        },
+        each: function (items, callback) {
+            if (!Array.isArray(items) || items.length == 0 || typeof callback !== 'function') {
+                return;
+            }
+
+            Array.prototype.forEach.call(items, callback);
         },
         extend: function (target, source) {
             if (typeof target !== 'object' || typeof source !== 'object') return false;
@@ -255,9 +263,10 @@ var $ = function (selector, context) {
             var result = (context || document).querySelectorAll(selector);
             return result || result.length === 1 ? result[0] : result;
         }
-    }
+    };
 
-    internal.$element = getSelector(selector, context);
-
-    return internal;
-}
+    return function (selector, context) {
+        internal.$element = getSelector(selector, context);
+        return internal;
+    };
+});
