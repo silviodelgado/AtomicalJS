@@ -26,7 +26,9 @@ $(function () {
 
         $(this).css('width', '500px');
 
-        $('<div>Test div</div>').appendTo($('#div1'));
+        $('<div></div>').text('Test div').appendTo('#div1');
+
+        $('<div>Test div 2</div>').appendTo('#div1');
 
         $('#div1').append('<a href="https://www.interart.com">Test Link</a>');
 
@@ -58,9 +60,20 @@ $(function () {
         console.log('c', c);
     });
 
+    var init_controls = function () {
+        $('button.off').off();
+        $('button.off').on('click', function (evt) {
+            console.log('evt', evt);
+            evt.preventDefault();
+            console.log('random', Math.random());
+            init_controls();
+        });
+    };
+
     var a = $(document).ready(function () {
         console.log('ready 2 a');
         $('button.extend').focus();
+        init_controls();
     });
     //console.log('a', a);
 
@@ -71,6 +84,7 @@ $(function () {
 
     $(document).ready(function () {
         console.log('ready');
+        init_controls();
         //alert('Ready!');
     }).ajaxStart(function () {
         console.log('ajax start');
