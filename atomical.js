@@ -265,13 +265,8 @@
         }
     };
 
-<<<<<<< HEAD
     return function (selector, context) {
         internal.$element = getSelector(selector, context);
         return internal;
     };
 });
-=======
-    return internal;
-}
->>>>>>> b3ca452f9e96d8b0a59ac9773e121ea37eb2cda2
