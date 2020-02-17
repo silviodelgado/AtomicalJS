@@ -30,16 +30,25 @@
             return internal;
         },
         on: function (eventName, callback) {
+            if (typeof internal.$element === 'object' && internal.$element.length == 0) {
+                return;
+            }
             if (typeof callback === 'function') {
                 internal.$element.addEventListener(eventName, callback);
             }
             return internal;
         },
         off: function () {
+            if (typeof internal.$element === 'object' && internal.$element.length == 0) {
+                return;
+            }
             internal.$element.parentNode.replaceChild(internal.$element.cloneNode(true), internal.$element);
             return internal;
         },
         attr: function (attributeName, value) {
+            if (typeof internal.$element === 'undefined' || internal.$element.length == 0) {
+                return;
+            }
             if (value !== undefined) {
                 internal.$element.setAttribute(attributeName, value);
                 return internal;
@@ -47,10 +56,16 @@
             return internal.$element.getAttribute(attributeName);
         },
         removeAttr: function (attributeName) {
+            if (typeof internal.$element === 'undefined' || internal.$element.length == 0) {
+                return;
+            }
             internal.$element.removeAttribute(attributeName);
             return internal;
         },
         hasClass: function (className) {
+            if (typeof internal.$element === 'undefined' || internal.$element.length == 0) {
+                return;
+            }
             return internal.$element.className.indexOf(className) >= 0;
         },
         addClass: function (className) {
@@ -58,10 +73,16 @@
             return internal;
         },
         removeClass: function (className) {
+            if (typeof internal.$element === 'undefined' || internal.$element.length == 0) {
+                return;
+            }
             internal.$element.classList.remove(className);
             return internal;
         },
         toggleClass: function (className) {
+            if (typeof internal.$element === 'undefined' || internal.$element.length == 0) {
+                return;
+            }
             internal.$element.classList.toggle(className);
             return internal;
         },
@@ -268,13 +289,13 @@
 
         if (selector) {
             var result = (context || document).querySelectorAll(selector);
-            return result.length === 1 ? result[0] : result;
+            return result || result.length === 1 ? result[0] : result;
         }
     };
 
     return function (selector, context) {
         internal.$element = getSelector(selector, context);
-        internal.$elements = Array.prototype.slice.call(internal.$element);
+        internal.$elements = Array.prototype.slice.call(internal.$element || {});
         return internal;
     };
 });
