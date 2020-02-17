@@ -17,6 +17,7 @@
 
     var internal = {
         $element: null,
+        $elements: [],
         $request: null,
         ready: function (callback) {
             if (typeof callback === 'function') {
@@ -168,6 +169,12 @@
             internal.$element.appendChild(outer.children[0]);
             return internal;
         },
+        first: function () {
+            return internal.$elements.slice(0, 1)[0];
+        },
+        last: function () {
+            return internal.$elements.slice(-1)[0];
+        },
         remove: function () {
             internal.$element.parentNode.removeChild(internal.$element);
         },
@@ -261,12 +268,13 @@
 
         if (selector) {
             var result = (context || document).querySelectorAll(selector);
-            return result || result.length === 1 ? result[0] : result;
+            return result.length === 1 ? result[0] : result;
         }
     };
 
     return function (selector, context) {
         internal.$element = getSelector(selector, context);
+        internal.$elements = Array.prototype.slice.call(internal.$element);
         return internal;
     };
 });
