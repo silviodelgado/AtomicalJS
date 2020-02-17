@@ -12,6 +12,7 @@ console.log('$', $);
 
         $('button.extend').trigger('click');
         $('button.extend').focus();
+
     });
     $('button.attribute').on('click', function (evt) {
         evt.preventDefault();
@@ -78,6 +79,18 @@ console.log('$', $);
 
             init_controls();
         });
+        
+        $('.invalid-button').attr('fake', 'test');
+        $('.invalid-button').removeAttr('fake');
+
+        var has = $('button.off').hasClass('off');
+        console.log('hasclass', has);
+        var has2 = $('button.off1').hasClass('off');
+        console.log('hasclass', has2);
+
+        $('button.off').removeClass('off2');
+        $('button.off1').removeClass('off2');
+        
     };
 
     var a = $(document).ready(function () {
