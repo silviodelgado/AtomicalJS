@@ -1,4 +1,7 @@
-$(function () {
+console.log('$', $);
+
+(function () {
+    console.log('$ 2', $);
     $('button.color').on('click', function (evt) {
         evt.preventDefault();
 
@@ -66,6 +69,13 @@ $(function () {
             console.log('evt', evt);
             evt.preventDefault();
             console.log('random', Math.random());
+
+            var first = $('#buttons button').first();
+            console.log('first', first);
+            var last = $('#buttons button').last();
+            console.log('last', last);
+            $(last).remove();
+
             init_controls();
         });
     };
@@ -75,15 +85,16 @@ $(function () {
         $('button.extend').focus();
         init_controls();
     });
-    //console.log('a', a);
+    console.log('a', a);
 
     var b = $(document).ajaxStart(function () {
         console.log('ajax start 1');
     });
-    //console.log('b', b);
+    console.log('b', b);
 
     $(document).ready(function () {
         console.log('ready');
+        //console.log('$ 3', $.ready());
         init_controls();
         //alert('Ready!');
     }).ajaxStart(function () {
@@ -91,4 +102,4 @@ $(function () {
     }).ajaxComplete(function () {
         console.log('ajax complete');
     });
-});
+})();
