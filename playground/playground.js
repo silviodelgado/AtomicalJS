@@ -1,7 +1,7 @@
-console.log('$', $);
+//console.log('$', $);
 
 (function () {
-    console.log('$ 2', $);
+    //console.log('$ 2', $);
     $('button.color').on('click', function (evt) {
         evt.preventDefault();
 
@@ -31,6 +31,7 @@ console.log('$', $);
         $(this).css('width', '500px');
 
         $('<div></div>').text('Test div').appendTo('#div1');
+        $('<div></div>').html('&aacute;').appendTo('#div1');
 
         $('<div>Test div 2</div>').appendTo('#div1');
 
@@ -62,9 +63,15 @@ console.log('$', $);
         console.log('a', a);
         console.log('b', b);
         console.log('c', c);
+
+        $('div').hide();
+    });
+    $('button.last-button').on('click', function () {
+        $('div').show();
     });
 
     var init_controls = function () {
+        console.log('\n\n\nInit controls...\n\n');
         $('button.off').off();
         $('button.off').on('click', function (evt) {
             console.log('evt', evt);
@@ -82,28 +89,34 @@ console.log('$', $);
         
         $('.invalid-button').attr('fake', 'test');
         $('.invalid-button').removeAttr('fake');
+        $('button.color').attr('id', 'color1');
+        $('button.color').removeAttr('disabled');
 
         var has = $('button.off').hasClass('off');
         console.log('hasclass', has);
         var has2 = $('button.off1').hasClass('off');
         console.log('hasclass', has2);
 
-        $('button.off').removeClass('off2');
+        console.log('foo', $('button.off').data('foo'));
+
+        $('button.off').removeClass('off2').addClass('off3');
         $('button.off1').removeClass('off2');
+
+        $('button.off').toggleClass('off4').css('text-transform', 'uppercase');
         
     };
 
     var a = $(document).ready(function () {
-        console.log('ready 2 a');
+        //console.log('ready 2 a');
         $('button.extend').focus();
-        init_controls();
+        //init_controls();
     });
-    console.log('a', a);
+    //console.log('a', a);
 
     var b = $(document).ajaxStart(function () {
         console.log('ajax start 1');
     });
-    console.log('b', b);
+    //console.log('b', b);
 
     $(document).ready(function () {
         console.log('ready');
