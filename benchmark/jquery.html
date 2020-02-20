@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AtomicalJS Benchmark Test</title>
+</head>
+<body>
+
+    <button type="button">Start</button>
+    
+    <ul id="lst"></ul>
+
+    <script src="jquery.min.js"></script>
+    <script>
+        var timer = function (operation) {
+            var start = new Date();
+
+            return {
+                stop: function () {
+                    var end = new Date();
+                    var time = end.getTime() - start.getTime();
+                    console.log('Timer: ', operation, 'finished in', time, 'ms');
+                }
+            }
+        }
+        $('button').on('click', function () {
+            var t = timer('appendTo');
+            for (var i = 1; i <= 10000; i++) {
+                $('<li></li>').text(i).appendTo('#lst');
+            }
+            t.stop();
+        })
+    </script>
+</body>
+</html>
