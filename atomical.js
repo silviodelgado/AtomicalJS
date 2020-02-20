@@ -1,5 +1,5 @@
 /*!
-  * AtomicalJS v1.2 - Vanilla Javascript Ultra Light jQuery alternative.
+  * AtomicalJS v1.2 - Vanilla Javascript Ultra Lightweight jQuery alternative.
   * Copyright 2019-2020 Silvio Delgado (https://github.com/silviodelgado)
   * Licensed under MIT (https://opensource.org/licenses/MIT)
   * https://github.com/silviodelgado/AtomicalJS
@@ -16,7 +16,7 @@
     'use strict';
 
     var internal = {
-        $element: null,
+        $el: null,
         $elements: [],
         $request: null,
         ready: function (callback) {
@@ -24,90 +24,90 @@
                 if (document.readyState != 'loading') {
                     callback();
                 } else {
-                    internal.$element.addEventListener('DOMContentLoaded', callback);
+                    internal.$el.addEventListener('DOMContentLoaded', callback);
                 }
             }
             return internal;
         },
         on: function (eventName, callback) {
-            if (typeof internal.$element === 'object' && internal.$element.length == 0) {
+            if (typeof internal.$el === 'object' && internal.$el.length == 0) {
                 return;
             }
             if (typeof callback === 'function') {
-                internal.$element.addEventListener(eventName, callback);
+                internal.$el.addEventListener(eventName, callback);
             }
             return internal;
         },
         off: function () {
-            if (typeof internal.$element === 'object' && internal.$element.length == 0) {
+            if (typeof internal.$el === 'object' && internal.$el.length == 0) {
                 return;
             }
-            internal.$element.parentNode.replaceChild(internal.$element.cloneNode(true), internal.$element);
+            internal.$el.parentNode.replaceChild(internal.$el.cloneNode(true), internal.$el);
             return internal;
         },
         attr: function (attributeName, value) {
-            if (typeof internal.$element === 'undefined' || internal.$element.length == 0) {
+            if (typeof internal.$el === 'undefined' || internal.$el.length == 0) {
                 return;
             }
             if (value !== undefined) {
-                internal.$element.setAttribute(attributeName, value);
+                internal.$el.setAttribute(attributeName, value);
                 return internal;
             }
-            return internal.$element.getAttribute(attributeName);
+            return internal.$el.getAttribute(attributeName);
         },
         removeAttr: function (attributeName) {
-            if (typeof internal.$element === 'undefined' || internal.$element.length == 0) {
+            if (typeof internal.$el === 'undefined' || internal.$el.length == 0) {
                 return;
             }
-            internal.$element.removeAttribute(attributeName);
+            internal.$el.removeAttribute(attributeName);
             return internal;
         },
         data: function (attributeName, value) {
-            if (typeof internal.$element === 'undefined' || internal.$element.length == 0) {
+            if (typeof internal.$el === 'undefined' || internal.$el.length == 0) {
                 return;
             }
             if (value !== undefined) {
-                internal.$element.setAttribute('data-' + attributeName, value);
+                internal.$el.setAttribute('data-' + attributeName, value);
                 return internal;
             }
-            return internal.$element.getAttribute('data-' + attributeName);
+            return internal.$el.getAttribute('data-' + attributeName);
         },
         hasClass: function (className) {
-            if (typeof internal.$element === 'undefined' || internal.$element.length == 0) {
+            if (typeof internal.$el === 'undefined' || internal.$el.length == 0) {
                 return false;
             }
-            return internal.$element.className.indexOf(className) >= 0;
+            return internal.$el.className.indexOf(className) >= 0;
         },
         addClass: function (className) {
-            internal.$element.classList.add(className);
+            internal.$el.classList.add(className);
             return internal;
         },
         removeClass: function (className) {
-            if (typeof internal.$element === 'undefined' || internal.$element.length == 0) {
+            if (typeof internal.$el === 'undefined' || internal.$el.length == 0) {
                 return;
             }
-            internal.$element.classList.remove(className);
+            internal.$el.classList.remove(className);
             return internal;
         },
         toggleClass: function (className) {
-            if (typeof internal.$element === 'undefined' || internal.$element.length == 0) {
+            if (typeof internal.$el === 'undefined' || internal.$el.length == 0) {
                 return;
             }
-            if (internal.$element.length === 'undefined') {
-                internal.$element.classList.toggle(className);
+            if (internal.$el.length === 'undefined') {
+                internal.$el.classList.toggle(className);
                 return internal;
             }
-            Array.prototype.forEach.call(internal.$element, function (elem, idx) {
+            Array.prototype.forEach.call(internal.$el, function (elem, idx) {
                 elem.classList.toggle(className);
             });
             return internal;
         },
         css: function (property, style) {
             if (typeof style !== undefined) {
-                internal.$element.style[property] = style;
+                internal.$el.style[property] = style;
                 return internal;
             }
-            return internal.$element.style[property];
+            return internal.$el.style[property];
         },
         ajax: function (params) {
             var values = {
@@ -197,41 +197,41 @@
         },
         appendTo: function (appendSelector, appendContext) {
             var appendObj = getSelector(appendSelector, appendContext);
-            appendObj.appendChild(internal.$element);
+            appendObj.appendChild(internal.$el);
             return internal;
         },
         append: function (domStructure) {
             var outer = document.createElement('div');
             outer.innerHTML = domStructure;
-            internal.$element.appendChild(outer.children[0]);
+            internal.$el.appendChild(outer.children[0]);
             return internal;
         },
         first: function () {
-            if (typeof internal.$element === 'undefined' || internal.$element.length == 0) {
+            if (typeof internal.$el === 'undefined' || internal.$el.length == 0) {
                 return;
             }
             return internal.$elements.slice(0, 1)[0];
         },
         last: function () {
-            if (typeof internal.$element === 'undefined' || internal.$element.length == 0) {
+            if (typeof internal.$el === 'undefined' || internal.$el.length == 0) {
                 return;
             }
             return internal.$elements.slice(-1)[0];
         },
         remove: function () {
-            if (typeof internal.$element === 'undefined' || internal.$element.length == 0) {
+            if (typeof internal.$el === 'undefined' || internal.$el.length == 0) {
                 return;
             }
-            internal.$element.parentNode.removeChild(internal.$element);
+            internal.$el.parentNode.removeChild(internal.$el);
         },
         parent: function () {
-            if (typeof internal.$element === 'undefined' || internal.$element.length == 0) {
+            if (typeof internal.$el === 'undefined' || internal.$el.length == 0) {
                 return;
             }
-            return internal.$element.parentNode;
+            return internal.$el.parentNode;
         },
         trigger: function (eventName, eventDetail) {
-            if (typeof internal.$element === 'undefined' || internal.$element.length == 0) {
+            if (typeof internal.$el === 'undefined' || internal.$el.length == 0) {
                 return;
             }
             if (window.CustomEvent && typeof window.CustomEvent === 'function') {
@@ -240,57 +240,57 @@
                 var event = document.createEvent('CustomEvent');
                 event.initCustomEvent(eventName, true, true, eventDetail);
             }
-            internal.$element.dispatchEvent(event);
+            internal.$el.dispatchEvent(event);
         },
         focus: function () {
-            if (typeof internal.$element === 'undefined' || internal.$element.length == 0) {
+            if (typeof internal.$el === 'undefined' || internal.$el.length == 0) {
                 return;
             }
-            internal.$element.focus();
+            internal.$el.focus();
         },
         show: function () {
-            if (typeof internal.$element === 'undefined' || internal.$element.length == 0) {
+            if (typeof internal.$el === 'undefined' || internal.$el.length == 0) {
                 return;
             }
-            if (internal.$element.length === 'undefined') {
-                internal.$element.style.display = '';
+            if (internal.$el.length === 'undefined') {
+                internal.$el.style.display = '';
                 return internal;
             }
-            Array.prototype.forEach.call(internal.$element, function (elem, idx) {
+            Array.prototype.forEach.call(internal.$el, function (elem, idx) {
                 elem.style.display = '';
             });
         },
         hide: function () {
-            if (typeof internal.$element === 'undefined' || internal.$element.length == 0) {
+            if (typeof internal.$el === 'undefined' || internal.$el.length == 0) {
                 return;
             }
-            if (internal.$element.length === 'undefined') {
-                internal.$element.style.display = 'none';
+            if (internal.$el.length === 'undefined') {
+                internal.$el.style.display = 'none';
                 return internal;
             }
-            Array.prototype.forEach.call(internal.$element, function (elem, idx) {
+            Array.prototype.forEach.call(internal.$el, function (elem, idx) {
                 elem.style.display = 'none';
             });
         },
         html: function (content) {
-            if (typeof internal.$element === 'undefined' || internal.$element.length == 0) {
+            if (typeof internal.$el === 'undefined' || internal.$el.length == 0) {
                 return;
             }
             if (typeof content !== undefined) {
-                internal.$element.innerHTML = content;
+                internal.$el.innerHTML = content;
                 return internal;
             }
-            return internal.$element.innerHTML;
+            return internal.$el.innerHTML;
         },
         text: function (content) {
-            if (typeof internal.$element === 'undefined' || internal.$element.length == 0) {
+            if (typeof internal.$el === 'undefined' || internal.$el.length == 0) {
                 return;
             }
             if (typeof content !== undefined) {
-                internal.$element.textContent = content;
+                internal.$el.textContent = content;
                 return internal;
             }
-            return internal.$element.textContent;
+            return internal.$el.textContent;
         },
         each: function (items, callback) {
             if (!Array.isArray(items) || items.length == 0 || typeof callback !== 'function') {
@@ -332,7 +332,7 @@
                 window.setTimeout(selector);
             else
                 document.addEventListener('DOMContentLoaded', selector);
-            return internal.$element;
+            return internal.$el;
         }
 
         if (typeof selector === 'string' && selector.indexOf('<') === 0) {
@@ -352,8 +352,8 @@
     };
 
     return function (selector, context) {
-        internal.$element = getSelector(selector, context);
-        internal.$elements = Array.prototype.slice.call(internal.$element || {});
+        internal.$el = getSelector(selector, context);
+        internal.$elements = Array.prototype.slice.call(internal.$el || {});
         return internal;
     };
 });
