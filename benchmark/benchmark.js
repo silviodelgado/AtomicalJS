@@ -1,12 +1,9 @@
-
 var timer = function (operation) {
-    var start = performance.now();
+    console.time(operation);
 
     return {
         stop: function () {
-            var end = performance.now();
-            var time = end - start;
-            console.log('Timer: ', operation, 'finished in', time, 'ms');
+            console.timeEnd(operation);
         }
     }
 }
