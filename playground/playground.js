@@ -118,6 +118,21 @@
     });
     //console.log('b', b);
 
+    $(document).ready(() => {
+        $('.fadein').on('click', (evt) => {
+            evt.preventDefault();
+            $('.color').fadeIn();
+        });
+        $('.fadein2').on('click', (evt) => {
+            evt.preventDefault();
+            $('.color').fadeIn('fast');
+        });
+        $('.fadeout').on('click', (evt) => {
+            evt.preventDefault();
+            $('.color').fadeOut();
+        });
+    });
+
     $(document).ready(function () {
         console.log('ready');
         //console.log('$ 3', $.ready());
