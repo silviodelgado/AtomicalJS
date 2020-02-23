@@ -272,6 +272,44 @@
                 elem.style.display = 'none';
             });
         },
+        fadeIn: function (velocity, display) {
+            if (['fast', 'slow'].indexOf(velocity) < 0) {
+                display = velocity;
+            }
+            var grade = .04;
+            switch (velocity) {
+                case 'fast': grade = .1; break;
+                case 'slow': grade = .02; break;
+                default: break;
+            }
+            internal.$el.style.opacity = 0;
+            internal.$el.style.display = display || 'inline-block';
+
+            (function fade() {
+                var val = parseFloat(internal.$el.style.opacity);
+                if ((val += grade) <= 1) {
+                    internal.$el.style.opacity = val;
+                    requestAnimationFrame(fade);
+                }
+            })();
+        },
+        fadeOut: function (velocity) {
+            var grade = .04;
+            switch (velocity) {
+                case 'fast': grade = .1; break;
+                case 'slow': grade = .02; break;
+                default: break;
+            }
+            internal.$el.style.opacity = 1;
+            (function fade() {
+                if ((internal.$el.style.opacity -= grade) < 0) {
+                    internal.$el.style.display = 'none';
+                    internal.$el.style.opacity = 1;
+                } else {
+                    requestAnimationFrame(fade);
+                }
+            })();
+        },
         html: function (content) {
             if (typeof internal.$el === 'undefined' || internal.$el.length == 0) {
                 return;
