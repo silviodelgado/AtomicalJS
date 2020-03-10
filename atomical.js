@@ -330,7 +330,38 @@
             }
             return internal.$el.textContent;
         },
+        width: function (value) {
+            if (typeof internal.$el === 'undefined' || internal.$el.length == 0) {
+                return;
+            }
+            if (value !== undefined) {
+                internal.$el.style.width = value;
+                return;
+            }
+            return parseFloat(getComputedStyle(internal.$el, null).width.replace("px", ""));
+        },
+        height: function () {
+            if (typeof internal.$el === 'undefined' || internal.$el.length == 0) {
+                return;
+            }
+            if (value !== undefined) {
+                internal.$el.style.height = value;
+                return;
+            }
+            return parseFloat(getComputedStyle(internal.$el, null).height.replace("px", ""));
+        },
+        length: function () {
+            if (typeof internal.$el === 'undefined') {
+                return 0;
+            }
+            return internal.$el.length;
+        },
         each: function (items, callback) {
+            if (typeof items === 'function') {
+                Array.prototype.forEach.call(internal.$elements, items);
+                return;
+            }
+
             if (!Array.isArray(items) || items.length == 0 || typeof callback !== 'function') {
                 return;
             }
