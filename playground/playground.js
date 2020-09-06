@@ -20,13 +20,17 @@
         $(this).attr('tabindex', '-1');
         $(this).attr('disabled', 'disabled');
 
-        $().get('http://atomicaljs.test/playground/items.json', function (r) {
-            console.log('response from ajax: ', r.data);
+        $.get('http://atomicaljs.test/playground/items.json', {
+            success: (r) => {
+                console.log('response from ajax: ', r.data);
+            }
         });
 
-        $().get('http://api.postmon.com.br/v1/cep/25965360', function (r) {
-            console.log('CEP: ', r);
-        })
+        // $.get('http://api.postmon.com.br/v1/cep/25965360', {
+        //     success: (r) => {
+        //         console.log('CEP: ', r);
+        //     }
+        // });
 
         $(this).css('width', '500px');
 
@@ -57,9 +61,9 @@
                 j: 'k'
             }
         }
-        
+
         console.log('$', $);
-        var c = $().extend(a, b);
+        var c = $.extend(a, b);
         console.log('a', a);
         console.log('b', b);
         console.log('c', c);
@@ -83,10 +87,11 @@
             var last = $('#buttons button').last();
             console.log('last', last);
             $(last).remove();
+            // $('#buttons button').last().remove(); // <- it also works
 
             init_controls();
         });
-        
+
         $('.invalid-button').attr('fake', 'test');
         $('.invalid-button').removeAttr('fake');
         $('button.color').attr('id', 'color1');
@@ -103,7 +108,7 @@
         $('button.off1').removeClass('off2');
 
         $('button.off').toggleClass('off4').css('text-transform', 'uppercase');
-        
+
     };
 
     var a = $(document).ready(function () {
@@ -113,9 +118,9 @@
     });
     //console.log('a', a);
 
-    var b = $(document).ajaxStart(function () {
-        console.log('ajax start 1');
-    });
+    // var b = $(document).ajaxStart(function () {
+    //     console.log('ajax start 1');
+    // });
     //console.log('b', b);
 
     $(document).ready(() => {
@@ -138,9 +143,9 @@
         //console.log('$ 3', $.ready());
         init_controls();
         //alert('Ready!');
-    }).ajaxStart(function () {
-        console.log('ajax start');
-    }).ajaxComplete(function () {
-        console.log('ajax complete');
+        //}).ajaxStart(function () {
+        //    console.log('ajax start');
+        //}).ajaxComplete(function () {
+        //    console.log('ajax complete');
     });
 })();

@@ -459,6 +459,9 @@
         if (options.replaceHeaders) {
             defaults.headers = {};
         }
+        if (typeof options.mode !== 'undefined') {
+            defaults.mode = options.mode;
+        }
         defaults.headers = atomical.extend(defaults.headers, options.headers || {});
         if (options.method === 'POST') {
             defaults.body = options.isJSON ? JSON.stringify(data) : data
