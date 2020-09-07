@@ -1,5 +1,5 @@
 ﻿/*!
-  * AtomicalJS v2.0 - Ultra Lightweight Vanilla Javascript jQuery alternative.
+  * AtomicalJS v2.1 - Ultra Lightweight Vanilla Javascript jQuery alternative.
   * Copyright 2019-2020 Silvio Delgado (https://github.com/silviodelgado)
   * Licensed under MIT (https://opensource.org/licenses/MIT)
   * https://github.com/silviodelgado/AtomicalJS
@@ -107,6 +107,14 @@
         internal.$elems.forEach((elem, i) => {
             elem.style.display = 'none';
         })
+        return atomical;
+    };
+
+    atomical.toggle = () => {
+        if (typeof internal.$el === 'undefined' || internal.$elems.length == 0) return atomical;
+        internal.$elems.forEach((elem, i) => {
+            elem.style.display = (elem.style.display == 'none') ? null : 'none';
+        });
         return atomical;
     };
 
@@ -242,16 +250,16 @@
         return atomical;
     };
 
-    atomical.toggle = (property, style) => {
+    atomical.toggleProperty = (property, value) => {
         if (typeof internal.$el === 'undefined' || internal.$elems.length == 0) return atomical;
-        if (typeof style !== 'undefined') {
+        if (typeof value !== 'undefined') {
             internal.$elems.forEach((elem, i) => {
-                elem.style[property] = (elem.style[property] == '') ? style : null;
+                elem.style[property] = (elem.style[property] == '') ? value : null;
             });
             return atomical;
         }
         if (typeof internal.$el.length !== 'undefined') return atomical;
-        internal.$el.style[property];
+        internal.$el[property] = value;
         return atomical;
     };
 

@@ -71,7 +71,8 @@
         $('div').hide();
     });
     $('button.last-button').on('click', function () {
-        $('div').show();
+        //$('div').show();
+        $('#div1').toggle();
     });
 
     var init_controls = function () {
