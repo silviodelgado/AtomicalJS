@@ -416,7 +416,8 @@
             data: {
                 'Accept': 'application/json',
                 'Content-Type': 'application/json;charset=UTF-8',
-                'IsAjaxRequest': true
+                'IsAjaxRequest': true,
+                'timeout': 30000
             },
             callback: () => { },
             error: () => { }
@@ -447,8 +448,7 @@
         const options = atomical.extend({
             isJSON: true,
             resultJSON: true,
-            replaceHeaders: false,
-            timeout: 30000
+            replaceHeaders: false
         }, params);
         if (options.url == null || options.url == '') {
             return;
@@ -461,7 +461,7 @@
         const defaults = {
             method: options.method,
             headers: ajax_config.request.data,
-            timeout: options.timeout,
+            timeout: ajax_config.request.data.timeout,
             signal: ajax_controller.signal
         }
         if (options.replaceHeaders) {
