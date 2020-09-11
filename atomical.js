@@ -363,20 +363,20 @@
 
     atomical.trigger = (evt_name) => {
         if (typeof internal.$el === 'undefined' || internal.$elems.length == 0) return atomical;
-        if (typeof internal.$el.length !== 'undefined') return atomical;
-        if (evt_name === 'click') {
-            let evt = new MouseEvent('click', {
-                bubbles: true,
-                cancelable: true,
-                view: window
-            });
-            internal.$el.dispatchEvent(evt);
-            return atomical;
-        }
-        if (typeof internal.$el.length !== 'undefined') return;
-        let evt = document.createEvent('HTMLEvents');
-        evt.initEvent(evt_name, true, false);
-        internal.$el.dispatchEvent(evt);
+        internal.$elems.forEach((elem, i) => {
+            if (evt_name === 'click') {
+                let evt = new MouseEvent('click', {
+                    bubbles: true,
+                    cancelable: true,
+                    view: window
+                });
+                elem.dispatchEvent(evt);
+                return;
+            }
+            let evt = document.createEvent('HTMLEvents');
+            evt.initEvent(evt_name, true, false);
+            elem.dispatchEvent(evt);
+        });
         return atomical;
     };
 
