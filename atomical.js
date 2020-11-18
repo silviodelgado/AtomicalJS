@@ -1,10 +1,10 @@
 ﻿/*!
-  * AtomicalJS v2.1 - Ultra Lightweight Vanilla Javascript jQuery alternative.
+  * AtomicalJS v2.4.0 - Ultra Lightweight Vanilla Javascript jQuery alternative.
   * Copyright 2019-2020 Silvio Delgado (https://github.com/silviodelgado)
   * Licensed under MIT (https://opensource.org/licenses/MIT)
   * https://github.com/silviodelgado/AtomicalJS
   */
-(function (root, factory) {
+ (function (root, factory) {
     if (typeof define === 'function' && define.amd) {
         define([], factory(root));
     } else {
@@ -120,12 +120,13 @@
 
     atomical.fadeIn = (callback) => {
         if (typeof internal.$el === 'undefined' || internal.$elems.length == 0) return atomical;
-        internal.$elems.forEach((elem, i) => {
+        internal.$elems.forEach(function (elem, i) {
             elem.style.opacity = 0;
             elem.style.display = null;
-            setTimeout(() => {
+            setTimeout(function () {
                 elem.style.transition = 'opacity 400ms ease 0s';
                 elem.style.opacity = 1;
+                elem.style.display = null;
                 if (callback && typeof callback === 'function') {
                     callback.call(this);
                 }
@@ -151,7 +152,7 @@
 
     atomical.attr = (attributeName, value) => {
         if (typeof internal.$el === 'undefined' || internal.$elems.length == 0) return atomical;
-        if (value !== undefined) {
+        if (typeof value !== 'undefined') {
             internal.$elems.forEach((elem, i) => {
                 elem.setAttribute(attributeName, value);
             })
@@ -171,7 +172,7 @@
 
     atomical.val = (value) => {
         if (typeof internal.$el === 'undefined' || internal.$elems.length == 0) return atomical;
-        if (value !== undefined) {
+        if (typeof value !== 'undefined') {
             internal.$elems.forEach((elem, i) => {
                 elem.value = value;
             });
@@ -184,13 +185,13 @@
     atomical.focus = () => {
         if (typeof internal.$el === 'undefined' || internal.$elems.length == 0) return atomical;
         if (typeof internal.$el.length !== 'undefined') return atomical;
-        internal.$el.focus();
+        internal.$elems[0].focus();
         return atomical;
     };
 
     atomical.data = (attributeName, value) => {
         if (typeof internal.$el === 'undefined' || internal.$elems.length == 0) return atomical;
-        if (value !== undefined) {
+        if (typeof value !== 'undefined') {
             internal.$elems.forEach((elem, i) => {
                 elem.setAttribute('data-' + attributeName, value);
             });
@@ -260,6 +261,14 @@
         }
         if (typeof internal.$el.length !== 'undefined') return atomical;
         internal.$el[property] = value;
+        return atomical;
+    };
+
+    atomical.prependTo = (prependSelector, prependContext) => {
+        if (typeof internal.$el === 'undefined' || internal.$elems.length == 0) return atomical;
+        let prependObj = initSelector(prependSelector, prependContext, true);
+        if (typeof prependObj !== 'object') return atomical;
+        prependObj.insertBefore(internal.$el, prependObj.firstChild);
         return atomical;
     };
 
@@ -513,19 +522,48 @@
             });
     };
 
-    atomical.post = (params) => {
-        let options = atomical.extend(params, {
+    atomical.post = (url, data, success, params) => {
+        if (typeof success === 'object') {
+            params = success;
+            success = null;
+        }
+        if (typeof data === 'function') {
+            success = data;
+            data = {};
+        }
+        let options = atomical.extend({
+            url,
+            data: data || {},
+            success,
             method: 'POST'
-        });
+        }, params || {});
         ajax_request(options);
     };
-
-    atomical.get = (url, params) => {
-        let options = atomical.extend(params, {
+    
+    atomical.get = (url, success, params) => {
+        if (typeof success === 'object') {
+            params = success;
+            success = null;
+        }
+        let options = atomical.extend({
             url,
             method: 'GET',
+            success,
             resultJSON: false
-        });
+        }, params || {});
+        ajax_request(options);
+    };
+    
+    atomical.getJSON = (url, success, params) => {
+        if (typeof success === 'object') {
+            params = success;
+            success = null;
+        }
+        let options = atomical.extend({
+            url,
+            method: 'GET',
+            success
+        }, params || {});
         ajax_request(options);
     };
 
