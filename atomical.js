@@ -1,5 +1,5 @@
 ﻿/*!
-  * AtomicalJS v2.4.0 - Ultra Lightweight Vanilla Javascript jQuery alternative.
+  * AtomicalJS v2.5.0 - Ultra Lightweight Vanilla Javascript jQuery alternative.
   * Copyright 2019-2020 Silvio Delgado (https://github.com/silviodelgado)
   * Licensed under MIT (https://opensource.org/licenses/MIT)
   * https://github.com/silviodelgado/AtomicalJS
@@ -309,6 +309,13 @@
         if (typeof internal.$el === 'undefined' || internal.$elems.length == 0) return null;
         if (typeof internal.$el.length !== 'undefined') return null;
         return internal.$el.parentNode;
+    };
+
+    atomical.closest = (selector) => {
+        if (typeof internal.$el === 'undefined' || internal.$elems.length == 0) return atomical;
+        if (typeof internal.$el.length !== 'undefined') return;
+        let closest = internal.$el.closest(selector);
+        return closest;
     };
 
     atomical.remove = () => {
