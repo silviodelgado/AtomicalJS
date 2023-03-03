@@ -1,6 +1,6 @@
 ﻿/*!
-  * AtomicalJS v2.5.0 - Ultra Lightweight Vanilla Javascript jQuery alternative.
-  * Copyright 2019-2020 Silvio Delgado (https://github.com/silviodelgado)
+  * AtomicalJS v2.6.0 - Ultra Lightweight Vanilla Javascript jQuery alternative.
+  * Copyright 2019-2023 Silvio Delgado (https://github.com/silviodelgado)
   * Licensed under MIT (https://opensource.org/licenses/MIT)
   * https://github.com/silviodelgado/AtomicalJS
   */
@@ -8,6 +8,7 @@
     if (typeof define === 'function' && define.amd) {
         define([], factory(root));
     } else {
+        root.noConflict = root.$;
         root.$ = factory(root);
     }
 })(typeof global !== "undefined" ? global : this.window || this.global, function (root) {
@@ -596,6 +597,11 @@
         }
         Array.prototype.forEach.call(items, callback);
         return atomical;
+    };
+
+    atomical.noConflict = () => {
+        root.$ = root.noConflict;
+        root.atomical = atomical;
     };
 
     atomical.fn = atomical.prototype = {};
