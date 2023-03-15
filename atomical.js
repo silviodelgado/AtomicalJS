@@ -1,22 +1,24 @@
 ﻿/*!
-  * AtomicalJS v2.6.0 - Ultra Lightweight Vanilla Javascript jQuery alternative.
+  * AtomicalJS v2.7.0 - Ultra Lightweight Vanilla Javascript jQuery alternative.
   * Copyright 2019-2023 Silvio Delgado (https://github.com/silviodelgado)
   * Licensed under MIT (https://opensource.org/licenses/MIT)
   * https://github.com/silviodelgado/AtomicalJS
   */
- (function (root, factory) {
+(function (root, factory) {
     if (typeof define === 'function' && define.amd) {
         define([], factory(root));
     } else {
         root.noConflict = root.$;
         root.$ = factory(root);
+        root.atomical = factory(root);
     }
 })(typeof global !== "undefined" ? global : this.window || this.global, function (root) {
     'use strict';
 
     const internal = {
         $el: null,
-        $elems: []
+        $elems: [],
+        $noConflict: false
     };
 
     const initSelector = function (selector, context, returnResult) {
@@ -61,6 +63,9 @@
     };
 
     const atomical = (selector, context) => {
+        if (!internal.$noConflict) {
+            root.$ = atomical;
+        }
         initSelector(selector, context);
         return atomical;
     };
@@ -547,7 +552,7 @@
         }, params || {});
         ajax_request(options);
     };
-    
+
     atomical.get = (url, success, params) => {
         if (typeof success === 'object') {
             params = success;
@@ -561,7 +566,7 @@
         }, params || {});
         ajax_request(options);
     };
-    
+
     atomical.getJSON = (url, success, params) => {
         if (typeof success === 'object') {
             params = success;
@@ -600,8 +605,8 @@
     };
 
     atomical.noConflict = () => {
+        internal.$noConflict = true;
         root.$ = root.noConflict;
-        root.atomical = atomical;
     };
 
     atomical.fn = atomical.prototype = {};

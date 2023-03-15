@@ -16,11 +16,16 @@
     <div id="div1" class="blue">
         Content inside a div.
     </div>
+    <div id="div2" class="red">
+        jQuery
+    </div>
 
+    <script src="jquery-3.6.4.min.js"></script>
     <script src="../atomical.js"></script>
     <script>
-        $.noConflict();
-        atomical('#div1').html('Test - noConflict');
+        atomical.noConflict();
+        atomical('#div1').html('Test - noConflict - wrote by AtomicalJS');
+        $('#div2').html('jQuery Version: ' + $.fn.jquery + ' - wrote by jQuery');
     </script>
 </body>
 </html>
